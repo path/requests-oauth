@@ -11,7 +11,6 @@ from auth import SignatureMethod_HMAC_SHA1
 
 from requests.auth import AuthBase
 
-
 class CustomSignatureMethod_HMAC_SHA1(SignatureMethod_HMAC_SHA1):
     def signing_base(self, request, consumer, token):
         """
@@ -30,7 +29,7 @@ class CustomSignatureMethod_HMAC_SHA1(SignatureMethod_HMAC_SHA1):
         return key, raw
 
 
-class OAuthHook(AuthBase):
+class OAuthHook(object):
     OAUTH_VERSION = '1.0'
     header_auth = False
     signature = CustomSignatureMethod_HMAC_SHA1()
@@ -203,3 +202,6 @@ class OAuthHook(AuthBase):
             request.data = request.data_and_params
 
         return request
+
+    def auth (self, request):
+        return self.__call__(request)
